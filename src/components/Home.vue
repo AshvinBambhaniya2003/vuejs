@@ -12,6 +12,25 @@
             <Map :latitude="geolocation.latitude" :longitude="geolocation.longitude" @markerClick="showPopup" />
         </div>
     </div>
+    <div>
+        <button @click="activeTab = 'detail'">Detail</button>
+        <button @click="activeTab = 'timezone'">Timezone</button>
+        <button @click="activeTab = 'userAgent'">User Agent</button>
+        <button @click="activeTab = 'astronomy'">Astronomy</button>
+    </div>
+
+    <div v-if="activeTab === 'detail'">
+        <h2>Detail Tab</h2>
+        <div v-if="geolocation">
+            <p>IP Address: {{ geolocation.ip }}</p>
+            <p>Continent: {{  geolocation.continent_name }}</p>
+            <p>Country: {{ geolocation.country_name }}</p>
+            <p>City: {{ geolocation.city }}</p>
+            <!-- Add more fields as needed -->
+            <img :src="geolocation.country_flag" alt="Flag" style="max-width: 100px;">
+        </div>
+    </div>
+
 </template>
 
 <script>
@@ -39,6 +58,7 @@ export default {
         const geolocation = ref(null);
         const loading = ref(false);
         const errorMessage = ref('');
+        const activeTab = ref('detail');
 
         // Function to handle search
         const search = async () => {
@@ -46,6 +66,7 @@ export default {
             try {
                 geolocation.value = await fetchGeolocation(ipAddress.value);
                 errorMessage.value = '';
+                console.log(geolocation.value);
             } catch (error) {
                 geolocation.value = null;
                 errorMessage.value = error.message;
@@ -65,7 +86,8 @@ export default {
             loading,
             errorMessage,
             search,
-            showPopup
+            showPopup,
+            activeTab
         };
     }
 };
