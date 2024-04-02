@@ -17,7 +17,7 @@ export default {
             required: true
         }
     },
-    setup(props) {
+    setup(props, { emit }) {
         const map = ref();
         const mapContainer = ref();
         const marker = ref()
@@ -30,6 +30,7 @@ export default {
             }).addTo(map.value);
 
             marker.value = L.marker([props.latitude, props.longitude]).addTo(map.value);
+            marker.value.bindPopup('Click to save data in JSON').on('click', () => emit('markerClick'));
 
         });
 
