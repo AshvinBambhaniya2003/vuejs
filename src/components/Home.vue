@@ -9,7 +9,7 @@
             <h2>{{ geolocation.city }}, {{ geolocation.country_name }}</h2>
             <p>Latitude: {{ geolocation.latitude }}</p>
             <p>Longitude: {{ geolocation.longitude }}</p>
-            <Map :latitude="geolocation.latitude" :longitude="geolocation.longitude" />
+            <Map :latitude="geolocation.latitude" :longitude="geolocation.longitude" @markerClick="showPopup" />
         </div>
     </div>
 </template>
@@ -53,12 +53,19 @@ export default {
             loading.value = false;
         };
 
+        const showPopup = () => {
+            // Function to show popup options for saving data in JSON
+            // Implement this according to your specific requirements
+            console.log("Popup options for saving data in JSON");
+        };
+
         return {
             ipAddress,
             geolocation,
             loading,
             errorMessage,
             search,
+            showPopup
         };
     }
 };

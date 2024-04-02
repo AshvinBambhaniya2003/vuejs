@@ -36,15 +36,10 @@ export default {
         watch([() => props.latitude, () => props.longitude], ([newLat, newLon]) => {
             if (map.value) {
                 map.value.setView([newLat, newLon]);
-                if (props.showMarker) {
-                    if (marker.value) {
-                        marker.value.setLatLng([newLat, newLon]);
-                    } else {
-                        marker.value = L.marker([newLat, newLon]).addTo(map.value);
-                    }
-                } else if (marker.value) {
-                    map.value.removeLayer(marker.value);
-                    marker.value = null;
+                if (marker.value) {
+                    marker.value.setLatLng([newLat, newLon]);
+                } else if (props.showMarker) {
+                    marker.value = L.marker([newLat, newLon]).addTo(map.value);
                 }
             }
         });
